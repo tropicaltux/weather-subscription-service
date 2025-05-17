@@ -3,7 +3,7 @@
     "image": "mcr.microsoft.com/devcontainers/go:1.24-bookworm",
     "workspaceFolder": "/wss",
     "workspaceMount": "source=${localWorkspaceFolder},target=/wss,type=bind,consistency=cached",
-    // "onCreateCommand": "go mod download",
+    "onCreateCommand": "go mod download",
     "customizations": {
       "vscode": {
         "settings": {},
