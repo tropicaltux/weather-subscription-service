@@ -1,8 +1,8 @@
 {
-    "name": "Weather Subscribtion Service",
+    "name": "Weather Subscription Service",
     "image": "mcr.microsoft.com/devcontainers/go:1.24-bookworm",
-    "workspaceFolder": "/weather-subscribtion-service",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/weather-subscribtion-service,type=bind,consistency=cached",
+    "workspaceFolder": "/wss",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/wss,type=bind,consistency=cached",
     // "onCreateCommand": "go mod download",
     "customizations": {
       "vscode": {
