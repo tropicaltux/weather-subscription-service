@@ -4,6 +4,9 @@
     "workspaceFolder": "/wss",
     "workspaceMount": "source=${localWorkspaceFolder},target=/wss,type=bind,consistency=cached",
     "onCreateCommand": "go mod download",
+    "remoteEnv": {
+        "APP_ENV": "development"
+    },
     "customizations": {
       "vscode": {
         "settings": {},

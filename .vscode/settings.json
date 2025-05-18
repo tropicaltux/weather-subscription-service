@@ -6,5 +6,8 @@
         "swaggerapi",
         "devcontainers",
         "unsubscription"
-    ]
+    ],
+    "terminal.integrated.env.linux": {
+        "APP_ENV": "development"
+    }
 }
