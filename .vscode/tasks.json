@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate API Server",
+            "type": "shell",
+            "command": "oapi-codegen",
+            "args": ["-config", "api/oapi-codegen.yaml", "api/openapi.yaml"],
+            "detail": "Generate Gin server code from OpenAPI specification"
+        }
+    ]
+} 

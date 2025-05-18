@@ -1,6 +1,6 @@
 # API Documentation
 
-This directory contains the OpenAPI specification for the Weather Subscription Service API.
+This directory contains the OpenAPI specification for the Weather Subscription Service API and configuration for code generation.
 
 ## Overview
 
@@ -30,4 +30,28 @@ The documentation will then be available at: [http://localhost:8080](http://loca
 
 ### Online Documentation
 
-The API documentation is also available online at: [https://weather.devcontainer.click/doc/api](https://weather.devcontainer.click/doc/api) 
+The API documentation is also available online at: [https://weather.devcontainer.click/doc/api](https://weather.devcontainer.click/doc/api)
+
+## Code Generation
+
+The repository includes a configuration file for [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) to generate server code from the OpenAPI specification. See the [configuration file](oapi-codegen.yaml) for details.
+
+### Generating API Code
+
+#### Using Command Line
+
+To generate server code from the OpenAPI specification, run:
+
+```bash
+oapi-codegen -config api/oapi-codegen.yaml api/openapi.yaml
+```
+
+#### Using VS Code Tasks
+
+1. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS)
+2. Select "Tasks: Run Task"
+3. Choose "Generate API Server"
+
+### Generated Code Location
+
+The generated server code is located in the [internal/api](../internal/http/api) directory. 

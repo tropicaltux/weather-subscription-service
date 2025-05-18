@@ -1,0 +1,12 @@
+package: api
+output: internal/api/http/server.gen.go
+generate:
+  gin-server: true
+  strict-server: true
+  models: true
+  embedded-spec: false
+import-mapping:
+  ./openapi.yaml: github.com/tropicaltux/weather-subscription-service/api
+output-options:
+  skip-prune: true
+  skip-fmt: false
