@@ -8,6 +8,8 @@ The OpenAPI specification (`openapi.yaml`) has been converted from the [original
 
 This conversion was done using [swagger2openapi](https://www.npmjs.com/package/swagger2openapi) to implement an API-first approach using the [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) library.
 
+A standardized error response schema has been added to provide consistent error handling across all API endpoints.
+
 ## Viewing the API Documentation
 
 You can view the API documentation in several ways:

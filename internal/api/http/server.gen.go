@@ -26,6 +26,12 @@ const (
 	SubscribeFormdataBodyFrequencyHourly SubscribeFormdataBodyFrequency = "hourly"
 )
 
+// Error Standard error response
+type Error struct {
+	// Message Human-readable error message
+	Message string `json:"message"`
+}
+
 // Subscription defines model for Subscription.
 type Subscription struct {
 	// City City for weather updates
@@ -248,20 +254,22 @@ func (response ConfirmSubscription200Response) VisitConfirmSubscriptionResponse(
 	return nil
 }
 
-type ConfirmSubscription400Response struct {
-}
+type ConfirmSubscription400JSONResponse Error
 
-func (response ConfirmSubscription400Response) VisitConfirmSubscriptionResponse(w http.ResponseWriter) error {
+func (response ConfirmSubscription400JSONResponse) VisitConfirmSubscriptionResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
-type ConfirmSubscription404Response struct {
-}
+type ConfirmSubscription404JSONResponse Error
 
-func (response ConfirmSubscription404Response) VisitConfirmSubscriptionResponse(w http.ResponseWriter) error {
+func (response ConfirmSubscription404JSONResponse) VisitConfirmSubscriptionResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(404)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type SubscribeRequestObject struct {
@@ -280,20 +288,22 @@ func (response Subscribe200Response) VisitSubscribeResponse(w http.ResponseWrite
 	return nil
 }
 
-type Subscribe400Response struct {
-}
+type Subscribe400JSONResponse Error
 
-func (response Subscribe400Response) VisitSubscribeResponse(w http.ResponseWriter) error {
+func (response Subscribe400JSONResponse) VisitSubscribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
-type Subscribe409Response struct {
-}
+type Subscribe409JSONResponse Error
 
-func (response Subscribe409Response) VisitSubscribeResponse(w http.ResponseWriter) error {
+func (response Subscribe409JSONResponse) VisitSubscribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(409)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type UnsubscribeRequestObject struct {
@@ -312,20 +322,22 @@ func (response Unsubscribe200Response) VisitUnsubscribeResponse(w http.ResponseW
 	return nil
 }
 
-type Unsubscribe400Response struct {
-}
+type Unsubscribe400JSONResponse Error
 
-func (response Unsubscribe400Response) VisitUnsubscribeResponse(w http.ResponseWriter) error {
+func (response Unsubscribe400JSONResponse) VisitUnsubscribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
-type Unsubscribe404Response struct {
-}
+type Unsubscribe404JSONResponse Error
 
-func (response Unsubscribe404Response) VisitUnsubscribeResponse(w http.ResponseWriter) error {
+func (response Unsubscribe404JSONResponse) VisitUnsubscribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(404)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type GetWeatherRequestObject struct {
@@ -354,20 +366,22 @@ func (response GetWeather200JSONResponse) VisitGetWeatherResponse(w http.Respons
 	return json.NewEncoder(w).Encode(response)
 }
 
-type GetWeather400Response struct {
-}
+type GetWeather400JSONResponse Error
 
-func (response GetWeather400Response) VisitGetWeatherResponse(w http.ResponseWriter) error {
+func (response GetWeather400JSONResponse) VisitGetWeatherResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
-type GetWeather404Response struct {
-}
+type GetWeather404JSONResponse Error
 
-func (response GetWeather404Response) VisitGetWeatherResponse(w http.ResponseWriter) error {
+func (response GetWeather404JSONResponse) VisitGetWeatherResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(404)
-	return nil
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 // StrictServerInterface represents all server handlers.

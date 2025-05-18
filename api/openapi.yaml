@@ -55,8 +55,16 @@ paths:
                     description: Weather description
         "400":
           description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         "404":
           description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /subscribe:
     post:
       tags:
@@ -93,8 +101,16 @@ paths:
           description: Subscription successful. Confirmation email sent.
         "400":
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         "409":
           description: Email already subscribed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   "/confirm/{token}":
     get:
       tags:
@@ -114,8 +130,16 @@ paths:
           description: Subscription confirmed successfully
         "400":
           description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         "404":
           description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   "/unsubscribe/{token}":
     get:
       tags:
@@ -136,10 +160,29 @@ paths:
           description: Unsubscribed successfully
         "400":
           description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         "404":
           description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
+    # Simple error response structure containing only error message.
+    # Additional fields may be added in the future if needed.
+    Error:
+      description: Standard error response
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Human-readable error message
     Weather:
       type: object
       properties:
