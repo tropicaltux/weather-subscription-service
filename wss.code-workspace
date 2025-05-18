@@ -3,5 +3,10 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"terminal.integrated.env.linux": {
+			"APP_ENV": "development"
+		}
+	}
 } 

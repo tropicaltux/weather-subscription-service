@@ -8,8 +8,5 @@
         "unsubscription",
         "meteo",
         "goroutines"
-    ],
-    "terminal.integrated.env.linux": {
-        "APP_ENV": "development"
-    }
+    ]
 }
