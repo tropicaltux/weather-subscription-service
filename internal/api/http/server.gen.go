@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/oapi-codegen/runtime"
 	strictgin "github.com/oapi-codegen/runtime/strictmiddleware/gin"
+	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // Defines values for SubscriptionFrequency.
@@ -41,7 +42,7 @@ type Subscription struct {
 	Confirmed *bool `json:"confirmed,omitempty"`
 
 	// Email Email address
-	Email string `json:"email"`
+	Email openapi_types.Email `json:"email"`
 
 	// Frequency Frequency of updates
 	Frequency SubscriptionFrequency `json:"frequency"`
@@ -68,7 +69,7 @@ type SubscribeFormdataBody struct {
 	City string `form:"city" json:"city"`
 
 	// Email Email address to subscribe
-	Email string `form:"email" json:"email"`
+	Email openapi_types.Email `form:"email" json:"email"`
 
 	// Frequency Frequency of updates (hourly or daily)
 	Frequency SubscribeFormdataBodyFrequency `form:"frequency" json:"frequency"`

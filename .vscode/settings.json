@@ -4,6 +4,7 @@
         "oapi",
         "codegen",
         "swaggerapi",
-        "devcontainers"
+        "devcontainers",
+        "unsubscription"
     ]
 }

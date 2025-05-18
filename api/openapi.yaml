@@ -1,14 +1,15 @@
 openapi: 3.0.0
 info:
-  description: Weather API application that allows users to subscribe to weather
-    updates for their city.
+  description: Weather API application that allows users to subscribe to weather updates for their city.
   version: 1.0.0
   title: Weather Forecast API
+
 tags:
   - name: weather
     description: Weather forecast operations
   - name: subscription
     description: Subscription management operations
+
 servers:
   - url: http://localhost:{port}/api
     variables:
@@ -20,14 +21,14 @@ servers:
       host:
         default: weather.devcontainer.click
         description: Host name
+
 paths:
   /weather:
     get:
       tags:
         - weather
       summary: Get current weather for a city
-      description: Returns the current weather forecast for the specified city using
-        WeatherAPI.com.
+      description: Returns the current weather forecast for the specified city using WeatherAPI.com.
       operationId: getWeather
       parameters:
         - name: city
@@ -65,13 +66,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
   /subscribe:
     post:
       tags:
         - subscription
       summary: Subscribe to weather updates
-      description: Subscribe an email to receive weather updates for a specific city
-        with chosen frequency.
+      description: Subscribe an email to receive weather updates for a specific city with chosen frequency.
       operationId: subscribe
       requestBody:
         content:
@@ -82,6 +83,7 @@ paths:
                 email:
                   description: Email address to subscribe
                   type: string
+                  format: email
                 city:
                   description: City for weather updates
                   type: string
@@ -111,6 +113,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
   "/confirm/{token}":
     get:
       tags:
@@ -140,13 +143,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
   "/unsubscribe/{token}":
     get:
       tags:
         - subscription
       summary: Unsubscribe from weather updates
-      description: Unsubscribes an email from weather updates using the token sent in
-        emails.
+      description: Unsubscribes an email from weather updates using the token sent in emails.
       operationId: unsubscribe
       parameters:
         - name: token
@@ -170,6 +173,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     # Simple error response structure containing only error message.
@@ -183,6 +187,7 @@ components:
         message:
           type: string
           description: Human-readable error message
+
     Weather:
       type: object
       properties:
@@ -195,6 +200,7 @@ components:
         description:
           type: string
           description: Weather description
+
     Subscription:
       type: object
       required:
@@ -205,6 +211,7 @@ components:
         email:
           type: string
           description: Email address
+          format: email
         city:
           type: string
           description: City for weather updates
@@ -217,4 +224,3 @@ components:
         confirmed:
           type: boolean
           description: Whether the subscription is confirmed
-
