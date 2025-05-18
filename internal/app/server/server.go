@@ -5,6 +5,7 @@ import (
 	api "github.com/tropicaltux/weather-subscription-service/internal/api/http"
 	"github.com/tropicaltux/weather-subscription-service/internal/config/server"
 	handlers "github.com/tropicaltux/weather-subscription-service/internal/handlers/http"
+	"github.com/tropicaltux/weather-subscription-service/pkg/weather"
 )
 
 type Server struct {
@@ -30,7 +31,9 @@ func New(config *server.Config) *Server {
 }
 
 func (s *Server) setupRoutes() {
-	handler := handlers.NewHandler()
+	weatherProvider := weather.NewOpenMeteoProvider()
+
+	handler := handlers.NewHandler(weatherProvider)
 
 	// Use the strict handler adapter to bridge between Gin and our strict typed handler
 	apiGroup := s.router.Group("/api")
