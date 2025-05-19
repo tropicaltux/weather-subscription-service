@@ -30,10 +30,6 @@ docker compose up swagger-ui -d
 
 The documentation will then be available at: [http://localhost:8080](http://localhost:8080)
 
-### Online Documentation
-
-The API documentation is also available online at: [https://weather.devcontainer.click/doc/api](https://weather.devcontainer.click/doc/api)
-
 ## Code Generation
 
 The repository includes a configuration file for [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) to generate server code from the OpenAPI specification. See the [configuration file](oapi-codegen.yaml) for details.

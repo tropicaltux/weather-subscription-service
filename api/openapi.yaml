@@ -19,7 +19,6 @@ servers:
   - url: https://{host}/api
     variables:
       host:
-        default: weather.devcontainer.click
         description: Host name
 
 paths:

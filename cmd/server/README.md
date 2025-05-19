@@ -24,7 +24,7 @@ The server uses environment variables for configuration:
 APP_ENV=development go run cmd/server/main.go
 
 # Production mode with specific allowed host
-APP_ENV=production ALLOWED_HOST=weather.devcontainer.click go run cmd/server/main.go
+APP_ENV=production ALLOWED_HOST=weather.example.com go run cmd/server/main.go
 
 # Specify port
 PORT=8080 go run cmd/server/main.go
