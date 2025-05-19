@@ -1,8 +1,11 @@
 package server
 
 import (
+	"net/http"
+	"strconv"
 	"time"
 
+	ratelimit "github.com/JGLTechnologies/gin-rate-limit"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +17,9 @@ func (s *Server) setupMiddleware() {
 
 	// Setup custom CORS middleware
 	s.router.Use(s.CORS())
+
+	// Setup rate limiting middleware
+	s.router.Use(s.RateLimiter())
 
 	// Use Gin's built-in recovery middleware
 	s.router.Use(gin.Recovery())
@@ -40,4 +46,28 @@ func (s *Server) CORS() gin.HandlerFunc {
 	}
 
 	return cors.New(corsConfig)
+}
+
+// RateLimiter returns a middleware that limits request rates by IP address
+func (s *Server) RateLimiter() gin.HandlerFunc {
+	// Create a rate limit store - using the in-memory store
+	// TODO: Use a more persistent store like Redis when scaling horizontally to ensure consistent rate limiting across instances
+	store := ratelimit.InMemoryStore(&ratelimit.InMemoryOptions{
+		Rate:  time.Second,
+		Limit: 10, // 10 requests per second
+	})
+
+	// TODO: Configure trusted proxies when deploying behind a reverse proxy
+	s.router.SetTrustedProxies(nil)
+
+	// Return the middleware
+	return ratelimit.RateLimiter(store, &ratelimit.Options{
+		KeyFunc: func(c *gin.Context) string { return c.ClientIP() },
+		ErrorHandler: func(c *gin.Context, info ratelimit.Info) {
+			sec := int(time.Until(info.ResetTime).Seconds())
+			c.Header("Retry-After", strconv.Itoa(sec))
+			c.AbortWithStatusJSON(http.StatusTooManyRequests,
+				gin.H{"message": "Too many requests. Please try again later."})
+		},
+	})
 }

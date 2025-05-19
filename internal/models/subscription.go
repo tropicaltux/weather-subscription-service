@@ -19,6 +19,6 @@ type Subscription struct {
 	Email     string                `gorm:"uniqueIndex;not null"`
 	City      string                `gorm:"not null"`
 	Frequency SubscriptionFrequency `gorm:"type:varchar(10);not null"`
-	Token     string                `gorm:"uniqueIndex;not null"`
+	Token     string                `gorm:"uniqueIndex;not null;type:varchar(128)"` // 128-character random string
 	Confirmed bool                  `gorm:"default:false"`
 }

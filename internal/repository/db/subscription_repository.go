@@ -2,10 +2,15 @@ package db
 
 import (
 	"context"
+	"errors"
 
 	"github.com/tropicaltux/weather-subscription-service/internal/models"
 	"github.com/tropicaltux/weather-subscription-service/internal/repository"
 	"gorm.io/gorm"
+)
+
+var (
+	ErrSubscriptionNotFound = errors.New("subscription not found")
 )
 
 type PostgresSubscriptionRepository struct {
@@ -21,15 +26,35 @@ func (r *PostgresSubscriptionRepository) Create(ctx context.Context, subscriptio
 }
 
 func (r *PostgresSubscriptionRepository) Confirm(ctx context.Context, token string) error {
-	return r.db.WithContext(ctx).Model(&models.Subscription{}).
+	result := r.db.WithContext(ctx).Model(&models.Subscription{}).
 		Where("token = ?", token).
 		Updates(map[string]interface{}{
 			"confirmed": true,
-		}).Error
+		})
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return ErrSubscriptionNotFound
+	}
+
+	return nil
 }
 
 func (r *PostgresSubscriptionRepository) Delete(ctx context.Context, token string) error {
-	return r.db.WithContext(ctx).Where("token = ?", token).Delete(&models.Subscription{}).Error
+	result := r.db.WithContext(ctx).Where("token = ?", token).Delete(&models.Subscription{})
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return ErrSubscriptionNotFound
+	}
+
+	return nil
 }
 
 func (r *PostgresSubscriptionRepository) GetAllActiveSubscriptionsSortedByCity(ctx context.Context) ([]models.Subscription, error) {
