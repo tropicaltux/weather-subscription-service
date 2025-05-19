@@ -52,4 +52,4 @@ oapi-codegen -config api/oapi-codegen.yaml api/openapi.yaml
 
 ### Generated Code Location
 
-The generated server code is located in the [internal/api](../internal/http/api) directory. 
+The generated server code is located in the [internal/api](../internal/api) directory. 
