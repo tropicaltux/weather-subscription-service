@@ -69,5 +69,7 @@ func (h *Handler) Subscribe(ctx context.Context, request api.SubscribeRequestObj
 		}
 	}
 
+	// TODO: Send confirmation email with subscription details and confirmation link
+
 	return api.Subscribe200Response{}, nil
 }

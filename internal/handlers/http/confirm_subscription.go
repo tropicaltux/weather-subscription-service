@@ -48,5 +48,7 @@ func (h *Handler) ConfirmSubscription(ctx context.Context, request api.ConfirmSu
 		}, nil
 	}
 
+	// TODO: Send welcome email to the confirmed subscriber
+
 	return api.ConfirmSubscription200Response{}, nil
 }

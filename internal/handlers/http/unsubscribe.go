@@ -48,5 +48,6 @@ func (h *Handler) Unsubscribe(ctx context.Context, request api.UnsubscribeReques
 		}, nil
 	}
 
+	// TODO: Send unsubscription info email
 	return api.Unsubscribe200Response{}, nil
 }

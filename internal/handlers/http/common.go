@@ -10,6 +10,8 @@ import (
 type Handler struct {
 	subscriptionService *services.SubscriptionService
 	weatherService      *services.WeatherService
+	// TODO: Add email service dependency to enable sending emails from handlers
+	// emailService *services.EmailService
 }
 
 // NewHandler creates a new HTTP handler
@@ -17,8 +19,12 @@ func NewHandler(weatherProvider weather.Provider, subscriptionRepo repository.Su
 	weatherService := services.NewWeatherService(weatherProvider)
 	subscriptionService := services.NewSubscriptionService(subscriptionRepo)
 
+	// TODO: Initialize email service with appropriate configuration
+	// emailService := services.NewEmailService(...)
+
 	return &Handler{
 		subscriptionService: subscriptionService,
 		weatherService:      weatherService,
+		// emailService: emailService,
 	}
 }
