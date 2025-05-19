@@ -9,7 +9,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-production}
       - PORT=3000
-      - ALLOWED_HOST=${ALLOWED_HOST:-localhost:8080} # Default host allowed to access the API documentation via Swagger UI
+      - ALLOW_ORIGIN=${ALLOW_ORIGIN:-http://localhost:8080} # Default host allowed to access the API documentation via Swagger UI
       - DB_HOST=postgres
       - DB_PORT=${DB_PORT:-5432}
       - DB_USER=${DB_USER:-postgres}
@@ -17,7 +17,8 @@ services:
       - DB_NAME=${DB_NAME:-weather_subscription}
       - DB_SSL_MODE=disable
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     
   postgres:
@@ -32,6 +33,12 @@ services:
     volumes:
       - wss-postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   swagger-ui:
     image: swaggerapi/swagger-ui:v5.21.0

@@ -23,8 +23,8 @@ The server uses environment variables for configuration:
 # Development mode
 APP_ENV=development go run cmd/server/main.go
 
-# Production mode with specific allowed host
-APP_ENV=production ALLOWED_HOST=weather.example.com go run cmd/server/main.go
+# Production mode with specific allowed origin
+APP_ENV=production ALLOW_ORIGIN="https://weather.example.com" go run cmd/server/main.go
 
 # Specify port
 PORT=8080 go run cmd/server/main.go

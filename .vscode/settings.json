@@ -9,6 +9,7 @@
         "meteo",
         "goroutines",
         "gorm",
-        "pgconn"
+        "pgconn",
+        "healthcheck"
     ]
 }

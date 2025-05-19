@@ -33,9 +33,9 @@ func (s *Server) CORS() gin.HandlerFunc {
 	if s.config.IsDevelopment() {
 		corsConfig.AllowAllOrigins = true
 	} else {
-		host := s.config.AllowedHost()
-		if host != "" {
-			corsConfig.AllowOrigins = []string{"https://" + host}
+		allowOrigin := s.config.AllowOrigin()
+		if allowOrigin != "" {
+			corsConfig.AllowOrigins = []string{allowOrigin}
 		}
 	}
 

@@ -7,13 +7,13 @@ Configuration for the Weather Subscription Service HTTP server.
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | `APP_ENV` | Environment (`development` or `production`) | `production` | No |
-| `ALLOWED_HOST` | Server hostname for CORS origins | - | Yes (in production) |
+| `ALLOW_ORIGIN` | Server URL for CORS origins | - | Yes (in production) |
 | `PORT` | Server listening port | `3000` | No |
 
 ## Features
 
 - **Development mode**: Allows CORS requests from all origins (`*`)
-- **Production mode**: Restricts CORS origins to `https://{ALLOWED_HOST}`
+- **Production mode**: Restricts CORS origins to value of `ALLOW_ORIGIN`
 
 ## Public API
 
@@ -22,7 +22,7 @@ Configuration for the Weather Subscription Service HTTP server.
 | `NewConfig()` | Creates configuration from environment variables | `(*Config, error)` |
 | `config.IsDevelopment()` | Checks if environment is development | `bool` |
 | `config.IsProduction()` | Checks if environment is production | `bool` |
-| `config.AllowedHost()` | Returns the allowed host | `string` |
+| `config.AllowOrigin()` | Returns the allowed origin | `string` |
 | `config.Port()` | Returns the configured port | `string` |
 
 ## Usage

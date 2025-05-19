@@ -19,22 +19,22 @@ const (
 type Config struct {
 	environment string
 	port        string
-	allowedHost string
+	allowOrigin string
 }
 
 func NewConfig() (*Config, error) {
 	env := getEnvironment()
-	allowedHost := getAllowedHost()
+	allowOrigin := getAllowOrigin()
 
-	// Validate that ALLOWED_HOST is set in production mode
-	if env == envProduction && allowedHost == "" {
-		return nil, errors.New("ALLOWED_HOST environment variable is required in production mode")
+	// Validate that ALLOW_ORIGIN is set in production mode
+	if env == envProduction && allowOrigin == "" {
+		return nil, errors.New("ALLOW_ORIGIN environment variable is required in production mode")
 	}
 
 	config := &Config{
 		environment: env,
 		port:        getPort(),
-		allowedHost: allowedHost,
+		allowOrigin: allowOrigin,
 	}
 	return config, nil
 }
@@ -47,8 +47,8 @@ func (c *Config) IsProduction() bool {
 	return c.environment == envProduction
 }
 
-func (c *Config) AllowedHost() string {
-	return c.allowedHost
+func (c *Config) AllowOrigin() string {
+	return c.allowOrigin
 }
 
 func (c *Config) Port() string {
@@ -77,6 +77,6 @@ func getPort() string {
 	return port
 }
 
-func getAllowedHost() string {
-	return os.Getenv("ALLOWED_HOST")
+func getAllowOrigin() string {
+	return os.Getenv("ALLOW_ORIGIN")
 }
