@@ -5,6 +5,8 @@ import (
 	"strings"
 
 	api "github.com/tropicaltux/weather-subscription-service/internal/api/http"
+	"github.com/tropicaltux/weather-subscription-service/internal/models"
+	"github.com/tropicaltux/weather-subscription-service/internal/services"
 )
 
 // Subscribe handles subscription requests
@@ -17,6 +19,8 @@ func (h *Handler) Subscribe(ctx context.Context, request api.SubscribeRequestObj
 	}
 
 	request.Body.City = strings.TrimSpace(request.Body.City)
+	email := string(request.Body.Email)
+	email = strings.TrimSpace(email)
 
 	if request.Body.City == "" {
 		return api.Subscribe400JSONResponse{
@@ -24,6 +28,41 @@ func (h *Handler) Subscribe(ctx context.Context, request api.SubscribeRequestObj
 		}, nil
 	}
 
-	// TODO: Add business logic
+	if email == "" {
+		return api.Subscribe400JSONResponse{
+			Message: "email parameter is required",
+		}, nil
+	}
+
+	var frequency models.SubscriptionFrequency
+	switch request.Body.Frequency {
+	case "hourly":
+		frequency = models.FrequencyHourly
+	case "daily":
+		frequency = models.FrequencyDaily
+	default:
+		return api.Subscribe400JSONResponse{
+			Message: "frequency must be either 'hourly' or 'daily'",
+		}, nil
+	}
+
+	_, err := h.subscriptionService.Subscribe(ctx, email, request.Body.City, frequency)
+	if err != nil {
+		switch err {
+		case services.ErrInvalidInput:
+			return api.Subscribe400JSONResponse{
+				Message: "Invalid input parameters",
+			}, nil
+		case services.ErrDuplicateEmail:
+			return api.Subscribe409JSONResponse{
+				Message: "Email is already subscribed",
+			}, nil
+		default:
+			return api.Subscribe400JSONResponse{
+				Message: "Failed to create subscription: " + err.Error(),
+			}, nil
+		}
+	}
+
 	return api.Subscribe200Response{}, nil
 }

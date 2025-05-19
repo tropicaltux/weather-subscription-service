@@ -8,6 +8,7 @@
         "unsubscription",
         "meteo",
         "goroutines",
-        "gorm"
+        "gorm",
+        "pgconn"
     ]
 }

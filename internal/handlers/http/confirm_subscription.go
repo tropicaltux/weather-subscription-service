@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	api "github.com/tropicaltux/weather-subscription-service/internal/api/http"
+	"github.com/tropicaltux/weather-subscription-service/internal/services"
 )
 
 // ConfirmSubscription handles subscription confirmation
@@ -22,6 +23,18 @@ func (h *Handler) ConfirmSubscription(ctx context.Context, request api.ConfirmSu
 		}, nil
 	}
 
-	// TODO: Add business logic
+	err := h.subscriptionService.ConfirmSubscription(ctx, request.Token)
+	if err != nil {
+		if err == services.ErrInvalidInput {
+			return api.ConfirmSubscription400JSONResponse{
+				Message: "Invalid token format",
+			}, nil
+		}
+
+		return api.ConfirmSubscription404JSONResponse{
+			Message: "Subscription not found or already confirmed",
+		}, nil
+	}
+
 	return api.ConfirmSubscription200Response{}, nil
 }
