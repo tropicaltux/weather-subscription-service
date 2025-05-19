@@ -1,13 +1,23 @@
-services:
-  swagger-ui:
-    image: swaggerapi/swagger-ui:v5.21.0
-    container_name: wss-api-swagger-ui
+services: 
+  api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wss-api-server
     ports:
-      - "8080:8080"
+      - "3000:3000"
     environment:
-      - SWAGGER_JSON=/api/openapi.yaml
-    volumes:
-      - ./api/openapi.yaml:/api/openapi.yaml
+      - APP_ENV=${APP_ENV:-production}
+      - PORT=3000
+      - ALLOWED_HOST=${ALLOWED_HOST:-localhost:8080} # Default host allowed to access the API documentation via Swagger UI
+      - DB_HOST=postgres
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_NAME=${DB_NAME:-weather_subscription}
+      - DB_SSL_MODE=disable
+    depends_on:
+      - postgres
     restart: unless-stopped
     
   postgres:
@@ -21,6 +31,17 @@ services:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - wss-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v5.21.0
+    container_name: wss-api-swagger-ui
+    ports:
+      - "8080:8080"
+    environment:
+      - SWAGGER_JSON=/api/openapi.yaml
+    volumes:
+      - ./api/openapi.yaml:/api/openapi.yaml
     restart: unless-stopped
 
 volumes:

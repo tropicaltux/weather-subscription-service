@@ -25,7 +25,7 @@ func LoadDatabaseConfig() *DatabaseConfig {
 		Username: getEnvOrDefault("DB_USER", "postgres"),
 		Password: getEnvOrDefault("DB_PASSWORD", "postgres"),
 		Database: getEnvOrDefault("DB_NAME", "weather_subscription"),
-		SSLMode:  getEnvOrDefault("DB_SSLMODE", "disable"),
+		SSLMode:  getEnvOrDefault("DB_SSL_MODE", "disable"),
 	}
 }
 
