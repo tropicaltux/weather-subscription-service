@@ -29,5 +29,11 @@ func NewPostgresDB(cfg *config.DatabaseConfig) (*gorm.DB, error) {
 
 // RunMigrations automates database schema creation and migrations
 func RunMigrations(db *gorm.DB) error {
+	// TODO: Implement production-grade migrations using a proper migration tool
+	// Consider using golang-migrate, atlas, or another migration tool with:
+	// - Version-controlled migrations
+	// - Up/down migration support
+	// - Migration history tracking
+	// - Transactional migrations
 	return db.AutoMigrate(&models.Subscription{})
 }

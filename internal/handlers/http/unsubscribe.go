@@ -19,20 +19,32 @@ func (h *Handler) Unsubscribe(ctx context.Context, request api.UnsubscribeReques
 
 	if request.Token != strings.TrimSpace(request.Token) {
 		return api.Unsubscribe400JSONResponse{
-			Message: "Token is invalid",
+			Message: "Invalid token format",
 		}, nil
 	}
 
 	err := h.subscriptionService.Unsubscribe(ctx, request.Token)
 	if err != nil {
+		if err == services.ErrTokenInvalid {
+			return api.Unsubscribe400JSONResponse{
+				Message: "Invalid token",
+			}, nil
+		}
+
+		if err == services.ErrSubscriptionNotFound {
+			return api.Unsubscribe404JSONResponse{
+				Message: "Subscription not found",
+			}, nil
+		}
+
 		if err == services.ErrInvalidInput {
 			return api.Unsubscribe400JSONResponse{
-				Message: "Invalid token format",
+				Message: "Invalid input parameters",
 			}, nil
 		}
 
 		return api.Unsubscribe404JSONResponse{
-			Message: "Subscription not found",
+			Message: "Failed to unsubscribe: " + err.Error(),
 		}, nil
 	}
 

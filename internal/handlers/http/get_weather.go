@@ -19,6 +19,8 @@ func (h *Handler) GetWeather(ctx context.Context, request api.GetWeatherRequestO
 		}, nil
 	}
 
+	// TODO: Implement city validation to check if city exists and is correctly formatted
+
 	weatherData, err := h.weatherService.GetCurrentWeather(ctx, request.Params.City)
 	if err != nil {
 		if err == services.ErrCityEmpty {

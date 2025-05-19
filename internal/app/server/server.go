@@ -55,12 +55,17 @@ func (s *Server) setupRoutes() {
 	weatherProvider := weather.NewOpenMeteoProvider()
 	subscriptionRepo := db.NewPostgresSubscriptionRepository(s.db)
 
+	// TODO: Implement email service for sending subscription confirmations and weather updates
+	// emailService := email.NewEmailService(...)
+
 	handler := handlers.NewHandler(weatherProvider, subscriptionRepo)
 
 	// Use the strict handler adapter to bridge between Gin and our strict typed handler
 	apiGroup := s.router.Group("/api")
 	strictHandler := api.NewStrictHandler(handler, nil)
 	api.RegisterHandlers(apiGroup, strictHandler)
+
+	// TODO: Add a scheduler for periodic weather updates to subscribers
 }
 
 // Start starts the HTTP server on the configured port

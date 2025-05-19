@@ -22,6 +22,7 @@ type openMeteoProvider struct {
 }
 
 func newOpenMeteoProvider() *openMeteoProvider {
+	// TODO: Implement more robust caching solution using Redis or similar when scaling horizontally
 	return &openMeteoProvider{
 		client: &http.Client{
 			Timeout: 10 * time.Second,

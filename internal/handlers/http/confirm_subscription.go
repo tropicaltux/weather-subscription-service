@@ -19,20 +19,32 @@ func (h *Handler) ConfirmSubscription(ctx context.Context, request api.ConfirmSu
 
 	if request.Token != strings.TrimSpace(request.Token) {
 		return api.ConfirmSubscription400JSONResponse{
-			Message: "Token is invalid",
+			Message: "Invalid token format",
 		}, nil
 	}
 
 	err := h.subscriptionService.ConfirmSubscription(ctx, request.Token)
 	if err != nil {
-		if err == services.ErrInvalidInput {
+		if err == services.ErrTokenInvalid {
 			return api.ConfirmSubscription400JSONResponse{
-				Message: "Invalid token format",
+				Message: "Invalid token",
 			}, nil
 		}
 
-		return api.ConfirmSubscription404JSONResponse{
-			Message: "Subscription not found or already confirmed",
+		if err == services.ErrSubscriptionNotFound {
+			return api.ConfirmSubscription404JSONResponse{
+				Message: "Subscription not found",
+			}, nil
+		}
+
+		if err == services.ErrInvalidInput {
+			return api.ConfirmSubscription400JSONResponse{
+				Message: "Invalid input parameters",
+			}, nil
+		}
+
+		return api.ConfirmSubscription400JSONResponse{
+			Message: "Failed to confirm subscription: " + err.Error(),
 		}, nil
 	}
 

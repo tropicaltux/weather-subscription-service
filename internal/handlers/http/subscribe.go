@@ -28,11 +28,16 @@ func (h *Handler) Subscribe(ctx context.Context, request api.SubscribeRequestObj
 		}, nil
 	}
 
+	// TODO: Implement city validation to check if city exists and is correctly formatted
+
 	if email == "" {
 		return api.Subscribe400JSONResponse{
 			Message: "email parameter is required",
 		}, nil
 	}
+
+	// TODO: Implement more robust email validation beyond the basic OpenAPI format check
+	// Consider checking MX records and implementing disposable email detection
 
 	var frequency models.SubscriptionFrequency
 	switch request.Body.Frequency {
